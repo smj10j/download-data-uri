@@ -4,7 +4,8 @@ var downloadDataURI = function(options) {
     return;
   }
   $.isPlainObject(options) || (options = {data: options});
-  if(!$.browser.webkit) {
+  var isWebkit = 'WebkitAppearance' in document.documentElement.style
+  if(!isWebkit) {
     location.href = options.data;
   }
   options.filename || (options.filename = "download." + options.data.split(",")[0].split(";")[0].substring(5).split("/")[1]);
