@@ -9,7 +9,7 @@ Supporting files hosted at [http://download-data-uri.appspot.com/](http://downlo
 Much more information available on the Github Pages site
 ---------------------------------------------------------
 
-http://smj10j.github.io/download-data-uri**
+http://smj10j.github.io/download-data-uri
 
 
 Basic Usage
