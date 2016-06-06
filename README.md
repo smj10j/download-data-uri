@@ -6,5 +6,5 @@ Automatically exported from [https://code.google.com/p/download-data-uri](https:
 Supporting files hosted at [http://download-data-uri.appspot.com/](http://download-data-uri.appspot.com/)
 
 
-Github Pages: http://smj10j.github.io/download-data-uri
+**Github Pages: http://smj10j.github.io/download-data-uri**
 
