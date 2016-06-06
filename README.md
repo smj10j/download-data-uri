@@ -24,3 +24,13 @@ downloadDataURI({
 });
 </script>
 ```
+
+
+Run the app server to host your own downloader instead of using the hosted one at http://download-data-uri.appspot.com
+----------------------------------------------------------------------------------------------------------------------
+
+Using Google App Engine
+
+```bash
+dev_appserver.py app.yaml
+```
