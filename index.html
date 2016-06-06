@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Download-data-uri by smj10j</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Download-data-uri</h1>
+        <p>Automatically exported from code.google.com/p/download-data-uri</p>
+
+        <p class="view"><a href="https://github.com/smj10j/download-data-uri">View the Project on GitHub <small>smj10j/download-data-uri</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/smj10j/download-data-uri/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/smj10j/download-data-uri/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/smj10j/download-data-uri">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="download-data-uri" class="anchor" href="#download-data-uri" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>download-data-uri</h1>
+
+<p>Automatically exported from <a href="https://code.google.com/p/download-data-uri">https://code.google.com/p/download-data-uri</a></p>
+
+<p>Supporting files hosted at <a href="http://download-data-uri.appspot.com/">http://download-data-uri.appspot.com/</a></p>
+
+<h4>
+<a id="below-usage-notes-copied-from-original-project" class="anchor" href="#below-usage-notes-copied-from-original-project" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Below usage notes copied from original project</h4>
+
+<blockquote>
+<p>Download your data uri with filename</p>
+
+<p><a href="http://blog.fguy.com/2011/06/28/jquery-export-table-to-csv-file/">http://blog.fguy.com/2011/06/28/jquery-export-table-to-csv-file/</a></p>
+
+<p>Google Chrome doesn't support download data uri with correct file extension. So I made this.</p>
+
+<p>Usage: </p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">downloadDataURI</span>({ filename<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>check.png<span class="pl-pds">"</span></span>, data<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEUAAAD///+l2Z/dAAAAM0lEQVR4nGP4/5/h/1+G/58ZDrAz3D/McH8yw83NDDeNGe4Ug9C9zwz3gVLMDA/A6P9/AFGGFyjOXZtQAAAAAElFTkSuQmCC<span class="pl-pds">"</span></span> });</pre></div>
+</blockquote>
+
+<hr>
+
+<h4>
+<a id="original-blogpost" class="anchor" href="#original-blogpost" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Original blogpost</h4>
+
+<p>`
+Jun 28
+JQuery - Export table to CSV file</p>
+
+<p>I needed to implement downloading table data as csv file. Normally, we're doing it on server side. But I thought it is violates the DRY principle. And it occurs server load.</p>
+
+<p>I looked for exporting CSV by Javascript. And I found Table2CSV (<a href="http://www.kunalbabre.com/projects/table2CSV.php">http://www.kunalbabre.com/projects/table2CSV.php</a>). But it isn't downloading as a file.</p>
+
+<p>I saw "Google Image Search" uses Data URI scheme to show the preview of their search results. You can see about "Data URI scheme" on here : <a href="http://en.wikipedia.org/wiki/Data_URI_scheme">http://en.wikipedia.org/wiki/Data_URI_scheme</a></p>
+
+<p>So, I could write very simple codes fully client side CSV export function using it as below :</p>
+
+<div class="highlight highlight-source-js"><pre>(<span class="pl-k">function</span>(<span class="pl-smi">$</span>) {
+<span class="pl-smi">$</span>.<span class="pl-smi">fn</span>.<span class="pl-en">exportAsCSV</span> <span class="pl-k">=</span> <span class="pl-k">function</span>() {
+  <span class="pl-k">var</span> error <span class="pl-k">=</span> <span class="pl-v">this</span>.<span class="pl-en">attr</span>(<span class="pl-s"><span class="pl-pds">"</span>tagName<span class="pl-pds">"</span></span>) <span class="pl-k">!=</span> <span class="pl-s"><span class="pl-pds">"</span>TABLE<span class="pl-pds">"</span></span> <span class="pl-k">&amp;&amp;</span> <span class="pl-en">console</span> <span class="pl-k">&amp;&amp;</span> <span class="pl-en">console</span>.<span class="pl-c1">error</span>(<span class="pl-s"><span class="pl-pds">"</span>This function only supports TABLE tag.<span class="pl-pds">"</span></span>);
+  <span class="pl-k">if</span>(error <span class="pl-k">!==</span> <span class="pl-c1">false</span>) {
+  <span class="pl-k">return</span>;
+  }
+  <span class="pl-k">var</span> csv <span class="pl-k">=</span> [];
+  <span class="pl-c">// header</span>
+  <span class="pl-smi">csv</span>.<span class="pl-c1">push</span>(<span class="pl-s"><span class="pl-pds">'</span>"<span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">"</span>th<span class="pl-pds">"</span></span>, <span class="pl-v">this</span>).<span class="pl-en">map</span>(<span class="pl-k">function</span>() {
+    <span class="pl-k">return</span> <span class="pl-en">$</span>(<span class="pl-v">this</span>).<span class="pl-c1">text</span>();
+  }).<span class="pl-en">get</span>().<span class="pl-c1">join</span>(<span class="pl-s"><span class="pl-pds">'</span>","<span class="pl-pds">'</span></span>) <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>"<span class="pl-pds">'</span></span>);
+  <span class="pl-c">// body</span>
+  <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">"</span>tr:gt(0)<span class="pl-pds">"</span></span>, <span class="pl-v">this</span>).<span class="pl-en">each</span>(<span class="pl-k">function</span>() {
+  <span class="pl-smi">csv</span>.<span class="pl-c1">push</span>(<span class="pl-s"><span class="pl-pds">'</span>"<span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">"</span>td<span class="pl-pds">"</span></span>, <span class="pl-v">this</span>).<span class="pl-en">map</span>(<span class="pl-k">function</span>() {
+    <span class="pl-k">return</span> <span class="pl-en">$</span>(<span class="pl-v">this</span>).<span class="pl-c1">text</span>();
+  }).<span class="pl-en">get</span>().<span class="pl-c1">join</span>(<span class="pl-s"><span class="pl-pds">'</span>","<span class="pl-pds">'</span></span>) <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>"<span class="pl-pds">'</span></span>);
+  });
+  <span class="pl-smi">location</span>.<span class="pl-c1">href</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>data:text/csv;charset=utf-8,<span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-c1">encodeURIComponent</span>(<span class="pl-smi">csv</span>.<span class="pl-c1">join</span>(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\r\n</span><span class="pl-pds">"</span></span>));
+  <span class="pl-k">return</span> <span class="pl-v">this</span>;
+}
+})(jQuery);</pre></div>
+
+<p>Try out a demo : <a href="https://jsfiddle.net/smj10j/rwvuwwqu/">https://jsfiddle.net/smj10j/rwvuwwqu/</a> 
+<em>(smj10j recovered dead jsfiddle content via wayback machine)</em></p>
+
+<p>Posted 28th June 2011 by Taehoon Kang</p>
+
+<p>Labels: csv, data uri, download, jquery
+`</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/smj10j">smj10j</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
